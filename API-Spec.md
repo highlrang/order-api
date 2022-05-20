@@ -2,7 +2,7 @@
 <br>
 
 <b>상품 목록<br>
-<span style="color: pink;">GET</span> /api/item</b>
+<span style="color: pink;">GET</span> /api/v1/item</b>
 ```json
 Response
 {
@@ -15,6 +15,7 @@ Response
       "brandName": "브랜드명",         // 브랜드명
       "price": 10000,                 // 가격
       "discountRate": 10,             // 할인율
+      "discountPrice": 9000,          // 할인가
       "stock": null
     },
     ...
@@ -23,7 +24,7 @@ Response
 ```
 
 <b>상품 상세<br>
-<span style="color: pink;">GET</span> /api/item/{id}</b>
+<span style="color: pink;">GET</span> /api/v1/item/{id}</b>
 ```json
 Response
 {
@@ -34,7 +35,8 @@ Response
       "name": "상품명",        
       "brandName": "브랜드명", 
       "price": 10000,         
-      "discountRate": 10,      
+      "discountRate": 10,
+      "discountPrice": 9000,
       "stock": 1000
     }
 }
@@ -69,7 +71,8 @@ Response
             "name": "상품명",        
             "brandName": "브랜드명", 
             "price": 10000,         
-            "discountRate": 10     
+            "discountRate": 10,
+            "discountPrice": 9000,
             "stock": 1000
           }
         },
@@ -108,11 +111,11 @@ Fail Response
 <br>
 
 <b>장바구니 상품 삭제<br>
-<span style="color: pink;">DELETE</span> /api/v1/cart</b>
+<span style="color: pink;">DELETE</span> /api/v1/cart/{id}/item</b>
 ```json
 Request
 {
-  "cartItemId": 1,    // 장바구니상품 아이디
+  "cartItemId": [1, 2, ...],    // 장바구니상품 아이디
 }
 
 Response
