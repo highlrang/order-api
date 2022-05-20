@@ -21,21 +21,15 @@ public class ItemApiController {
 
     @GetMapping
     public ResponseEntity<?> findAll(){
-        return new ResponseEntity<>(
-                new ApiResponseDto<>(
-                        SUCCESS.getCode(), SUCCESS.getMessage(), itemService.findAll()
-                ),
-                HttpStatus.OK
+        return ResponseEntity.ok(
+                ApiResponseDto.success(itemService.findAll())
         );
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id){
-        return new ResponseEntity<>(
-                new ApiResponseDto<>(
-                        SUCCESS.getCode(), SUCCESS.getMessage(), itemService.findById(id)
-                ),
-                HttpStatus.OK
+        return ResponseEntity.ok(
+                ApiResponseDto.success(itemService.findById(id))
         );
     }
 

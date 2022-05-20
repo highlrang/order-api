@@ -27,33 +27,23 @@ public class CartApiController {
 
     @GetMapping
     public ResponseEntity<?> findByUser(){
-        UserResponseDto user = (UserResponseDto) session.getAttribute("user");
-        CartResponseDto cart = cartService.findByUser(user.getId());
-        return new ResponseEntity<>(
-                new ApiResponseDto<>(
-                        SUCCESS.getCode(), SUCCESS.getMessage(), cart
-                ),
-                HttpStatus.OK
+        CartResponseDto cart = cartService.findByUser();
+        return ResponseEntity.ok(
+                ApiResponseDto.success(cart)
         );
     }
 
-    @PostMapping
-    public ResponseEntity<?> addCartItem(@RequestBody @Valid CartItemRequestDto dto){
-        cartService.addCartItem(dto);
-        return new ResponseEntity<>(
-                new ApiResponseDto<>(SUCCESS.getCode(), SUCCESS.getMessage(), null),
-                HttpStatus.OK
-        );
+    @PostMapping("/{id}")
+    public ResponseEntity<?> addCartItem(@PathVariable("id") Long id,
+                                         @RequestBody @Valid CartItemRequestDto dto){
+        cartService.addCartItem(id, dto);
+        return ResponseEntity.ok(ApiResponseDto.success());
     }
 
     @DeleteMapping("/{id}/item")
-    public ResponseEntity<?> removeCartItem(
-            @PathVariable("id") Long cartId,
-            @RequestParam("cartItemId") List<Long> cartItemIds){
+    public ResponseEntity<?> removeCartItem(@PathVariable("id") Long cartId,
+                                            @RequestParam("cartItemId") List<Long> cartItemIds){
         cartService.removeCartItem(cartId, cartItemIds);
-        return new ResponseEntity<>(
-                new ApiResponseDto<>(SUCCESS.getCode(), SUCCESS.getMessage(), null),
-                HttpStatus.OK
-        );
+        return ResponseEntity.ok(ApiResponseDto.success());
     }
 }

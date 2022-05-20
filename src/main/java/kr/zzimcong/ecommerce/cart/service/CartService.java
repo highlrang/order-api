@@ -6,7 +6,7 @@ import kr.zzimcong.ecommerce.cart.dto.CartResponseDto;
 import java.util.List;
 
 public interface CartService {
-    CartResponseDto findByUser(Long userId);
-    void addCartItem(CartItemRequestDto dto);
+    CartResponseDto findByUser();
+    void addCartItem(Long cartId, CartItemRequestDto dto);
     void removeCartItem(Long cartId, List<Long> cartItemIds);
 }

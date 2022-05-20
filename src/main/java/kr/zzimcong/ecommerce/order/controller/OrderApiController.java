@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static kr.zzimcong.ecommerce.common.StatusCode.SUCCESS;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/order")
@@ -22,26 +20,28 @@ public class OrderApiController {
 
     @GetMapping
     public ResponseEntity<?> findAll(){
-        return new ResponseEntity<>(
-                new ApiResponseDto<>(
-                    SUCCESS.getCode(), SUCCESS.getMessage(), orderService.findAll()
-                ),
-                HttpStatus.OK
+        return ResponseEntity.ok(
+                ApiResponseDto.success(orderService.findAll())
         );
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id){
-        return null;
+        return ResponseEntity.ok(
+            ApiResponseDto.success(orderService.findById(id))
+        );
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid OrderRequestDto dto){
-        return null;
+        return ResponseEntity.ok(
+                ApiResponseDto.success(orderService.save(dto))
+        );
     }
 
     @PatchMapping("/{id}/cancel")
     public ResponseEntity<?> cancel(@PathVariable("id") Long id){
-        return null;
+        orderService.cancel(id);
+        return ResponseEntity.ok(ApiResponseDto.success());
     }
 }

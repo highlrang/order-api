@@ -1,5 +1,6 @@
 package kr.zzimcong.ecommerce.item.domain;
 
+import kr.zzimcong.ecommerce.common.StockZeroException;
 import kr.zzimcong.ecommerce.order.domain.Order;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,6 +48,8 @@ public class Item {
 
     private Integer discountRate;
 
+    private Integer discountPrice;
+
     @NotNull
     private Integer stock;
 
@@ -61,18 +64,24 @@ public class Item {
         this.price = price;
         this.discountRate = discountRate;
         this.stock = stock;
+        discountPrice = discountRate == null || discountRate == 0 ? price
+                : price * (discountRate / 100);
     }
 
-    public void checkStock(int quantity){
+    public void addStock(int quantity){
+        this.stock += quantity;
+    }
+
+    public void removeStock(int quantity){
         int nowStock = stock - quantity;
         if(nowStock < 0 )
-            throw new IllegalStateException(STOCK_ZERO_EXCEPTION.getMessage());
+            throw new StockZeroException();
         stock = nowStock;
     }
 
-
-    public int getDiscountPrice() {
-        return price * (discountRate / 100);
+    public void setDiscountRate(Integer rate){
+        discountPrice = rate;
+        discountPrice = rate == null || rate == 0 ? price
+                : price * (discountRate / 100);
     }
-
 }

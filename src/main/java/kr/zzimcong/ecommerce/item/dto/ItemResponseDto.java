@@ -13,13 +13,13 @@ public class ItemResponseDto {
     private int discountPrice;
     private int stock;
 
-    public ItemResponseDto(Long id, String name, String brandName, int price, int discountRate){
+    public ItemResponseDto(Long id, String name, String brandName, int price, int discountRate, int discountPrice){
         this.id = id;
         this.name = name;
         this.brandName = brandName;
         this.price = price;
         this.discountRate = discountRate;
-        this.discountPrice = price * (discountRate / 100);
+        this.discountPrice = discountPrice;
     }
 
     /** Brand Fetch Join 필요 */
@@ -29,7 +29,7 @@ public class ItemResponseDto {
         this.brandName = item.getBrand().getName();
         this.price = item.getPrice();
         this.discountRate = item.getDiscountPrice();
-        this.discountPrice = price * (discountRate / 100);
+        this.discountPrice = item.getDiscountPrice();
         this.stock = item.getStock();
     }
 }

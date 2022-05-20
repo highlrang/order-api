@@ -86,7 +86,7 @@ Response
 <br>
 
 <b>장바구니 상품 담기<br>
-<span style="color: pink;">POST</span> /api/v1/cart</b>
+<span style="color: pink;">POST</span> /api/v1/cart/{id}</b>
 ```json
 Request
 {
@@ -141,7 +141,7 @@ Fail Response
 ```json
 Request
 {
-  items: [
+  orderItems: [
     {
       "itemId": 1,          // 상품 아이디
       "quantity": 1,        // 수량

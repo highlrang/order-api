@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static kr.zzimcong.ecommerce.common.StatusCode.ORDER_CANCEL_IMPOSSIBLE;
+
 @Entity @Getter
 @NoArgsConstructor
 public class Delivery {
@@ -20,5 +22,13 @@ public class Delivery {
         delivery.address = address;
         delivery.deliveryStatus = DeliveryStatus.READY;
         return delivery;
+    }
+
+    public void setDeliveryStatus(DeliveryStatus status){
+        if(!deliveryStatus.name().equals(DeliveryStatus.READY.name()) &&
+                status.name().equals(DeliveryStatus.CANCEL.name()))
+            throw new IllegalStateException(ORDER_CANCEL_IMPOSSIBLE.getMessage());
+
+        this.deliveryStatus = status;
     }
 }

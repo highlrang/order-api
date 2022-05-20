@@ -26,6 +26,7 @@ public class OrderItem {
     @Builder
     public OrderItem(Item item, Integer quantity){
         this.item = item;
+        item.removeStock(quantity);
         this.quantity = quantity;
     }
 

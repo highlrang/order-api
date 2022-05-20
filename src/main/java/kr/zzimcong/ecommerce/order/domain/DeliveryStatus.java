@@ -2,5 +2,5 @@ package kr.zzimcong.ecommerce.order.domain;
 
 
 public enum DeliveryStatus {
-    READY
+    READY, START, INPROGRESS, COMPLETE, CANCEL
 }

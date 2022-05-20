@@ -25,9 +25,6 @@ public class UserApiController {
     @GetMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequestDto dto){
         userService.login(dto);
-        return new ResponseEntity<>(
-                new ApiResponseDto<>(SUCCESS.getCode(), SUCCESS.getMessage(), null),
-                HttpStatus.OK
-        );
+        return ResponseEntity.ok(ApiResponseDto.success());
     }
 }

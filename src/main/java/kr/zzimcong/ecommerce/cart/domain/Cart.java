@@ -21,8 +21,9 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private List<CartItem> cartItems = new ArrayList<>();
 
-    public void addCartItem(CartItem... cartItems){
-        this.cartItems.addAll(List.of(cartItems));
+    public void addCartItem(CartItem cartItem){
+        this.cartItems.add(cartItem);
+        cartItem.setCart(this);
     }
 
     public void removeCartItem(CartItem... cartItem){

@@ -24,7 +24,7 @@ public class Order {
 
     private Integer totalPrice;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
@@ -54,5 +54,13 @@ public class Order {
         totalPrice = orderItems.stream().
                 mapToInt(oi -> oi.getItem().getDiscountPrice() * oi.getQuantity())
                 .sum();
+    }
+
+    public void cancel(){
+        for (OrderItem oi : orderItems) {
+            oi.getItem().addStock(oi.getQuantity());
+        }
+        delivery.setDeliveryStatus(DeliveryStatus.CANCEL);
+        orderStatus = OrderStatus.CANCEL;
     }
 }
