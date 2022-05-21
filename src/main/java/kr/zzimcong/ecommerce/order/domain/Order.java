@@ -51,9 +51,13 @@ public class Order {
     }
 
     public void calcTotalPrice(){
-        totalPrice = orderItems.stream().
-                mapToInt(oi -> oi.getItem().getDiscountPrice() * oi.getQuantity())
-                .sum();
+        totalPrice = orderItems.stream()
+                        .mapToInt(oi -> {
+                            int price = oi.getItem().getDiscountPrice() != null ?
+                                oi.getItem().getDiscountPrice() : oi.getItem().getPrice();
+                            return price * oi.getQuantity();
+                        })
+                        .sum();
     }
 
     public void cancel(){

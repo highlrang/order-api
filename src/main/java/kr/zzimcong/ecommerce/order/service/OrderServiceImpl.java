@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static kr.zzimcong.ecommerce.common.StatusCode.ITEM_NOT_FOUND;
-import static kr.zzimcong.ecommerce.common.StatusCode.ORDER_NOT_FOUND;
+import static kr.zzimcong.ecommerce.common.StatusCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +34,9 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public List<OrderResponseDto> findAll() {
         UserResponseDto user = (UserResponseDto) session.getAttribute("user");
+        if(user == null)
+            throw new IllegalStateException(USER_LOGIN_REQUIRED.getMessage());
+
         List<OrderResponseDto> orderList = orderRepository.findAllDto(user.getId());
 
         List<Long> orderIds = orderList.stream()
@@ -62,6 +64,7 @@ public class OrderServiceImpl implements OrderService{
         return orderDto;
     }
 
+    @Transactional
     @Override
     public Long save(OrderRequestDto dto){
         List<OrderItem> orderItemList = dto.getOrderItems().stream()
@@ -79,6 +82,7 @@ public class OrderServiceImpl implements OrderService{
         return result.getId();
     }
 
+    @Transactional
     @Override
     public void cancel(Long id) {
         Order order = orderRepository.findById(id)

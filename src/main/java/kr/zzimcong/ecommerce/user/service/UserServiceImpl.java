@@ -2,6 +2,7 @@ package kr.zzimcong.ecommerce.user.service;
 
 import kr.zzimcong.ecommerce.user.domain.User;
 import kr.zzimcong.ecommerce.user.dto.UserRequestDto;
+import kr.zzimcong.ecommerce.user.dto.UserResponseDto;
 import kr.zzimcong.ecommerce.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,6 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findByEmail(dto.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException(USER_NOT_FOUND.getMessage()));
         user.checkPassword(dto.getPassword());
-        session.setAttribute("user", user);
+        session.setAttribute("user", new UserResponseDto(user));
     }
 }

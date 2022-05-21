@@ -9,11 +9,10 @@ public class ItemResponseDto {
     private String name;
     private String brandName;
     private int price;
-    private int discountRate;
-    private int discountPrice;
-    private int stock;
+    private Integer discountRate;
+    private Integer discountPrice;
 
-    public ItemResponseDto(Long id, String name, String brandName, int price, int discountRate, int discountPrice){
+    public ItemResponseDto(Long id, String name, String brandName, int price, Integer discountRate, Integer discountPrice){
         this.id = id;
         this.name = name;
         this.brandName = brandName;
@@ -30,6 +29,5 @@ public class ItemResponseDto {
         this.price = item.getPrice();
         this.discountRate = item.getDiscountPrice();
         this.discountPrice = item.getDiscountPrice();
-        this.stock = item.getStock();
     }
 }

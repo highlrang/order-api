@@ -11,11 +11,11 @@ public class OrderItemResponseDto {
     private Long orderId;
     private String itemName;
     private int price;
-    private int discountRate;
-    private int discountPrice;
+    private Integer discountRate;
+    private Integer discountPrice;
     private int quantity;
 
-    public OrderItemResponseDto(Long orderId, String itemName, int price, int discountRate, int discountPrice, int quantity){
+    public OrderItemResponseDto(Long orderId, String itemName, int price, Integer discountRate, Integer discountPrice, int quantity){
         this.orderId = orderId;
         this.itemName = itemName;
         this.price = price;
@@ -24,7 +24,7 @@ public class OrderItemResponseDto {
         this.quantity = quantity;
     }
 
-    public OrderItemResponseDto(OrderItem oi){ // 쿼리 확인하기
+    public OrderItemResponseDto(OrderItem oi){
         Item item = oi.getItem();
         this.itemName = item.getName();
         this.price = item.getPrice();

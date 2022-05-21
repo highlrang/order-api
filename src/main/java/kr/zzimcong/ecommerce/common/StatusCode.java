@@ -14,9 +14,10 @@ public enum StatusCode {
     /** USER */
     USER_NOT_FOUND("20010", "사용자 정보를 찾을 수 없습니다."),
     USER_NOT_MATCHED("20011", "사용자 정보가 일치하지 않습니다."),
+    USER_LOGIN_REQUIRED("20012", "로그인이 필요합니다."),
 
     /** ITEM */
-    ITEM_NOT_FOUND("30010", "상품 정보를 가져올 수 없습니다."),
+    ITEM_NOT_FOUND("30010", "상품 정보를 불러오지 못했습니다."),
     STOCK_ZERO_EXCEPTION("30011", "상품 재고가 부족합니다."),
 
     /** CART */

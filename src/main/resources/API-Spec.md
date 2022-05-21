@@ -16,7 +16,6 @@ Response
       "price": 10000,                 // 가격
       "discountRate": 10,             // 할인율
       "discountPrice": 9000,          // 할인가
-      "stock": null
     },
     ...
   ]
@@ -36,8 +35,7 @@ Response
       "brandName": "브랜드명", 
       "price": 10000,         
       "discountRate": 10,
-      "discountPrice": 9000,
-      "stock": 1000
+      "discountPrice": 9000
     }
 }
 
@@ -72,8 +70,7 @@ Response
             "brandName": "브랜드명", 
             "price": 10000,         
             "discountRate": 10,
-            "discountPrice": 9000,
-            "stock": 1000
+            "discountPrice": 9000
           }
         },
         ...

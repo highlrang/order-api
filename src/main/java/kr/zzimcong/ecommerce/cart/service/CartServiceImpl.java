@@ -35,47 +35,62 @@ public class CartServiceImpl implements CartService{
     @Override
     public CartResponseDto findByUser() {
         UserResponseDto userDto = (UserResponseDto) session.getAttribute("user");
+        if(userDto == null)
+            throw new IllegalStateException(USER_LOGIN_REQUIRED.getMessage());
+
         Optional<Cart> optionalCart = cartRepository.findByUser(userDto.getId());
         Cart cart;
         if (optionalCart.isPresent()){
             cart = optionalCart.get();
        }else {
-            User user = userRepository.findById(userDto.getId())
-                    .orElseThrow(() -> new IllegalArgumentException(USER_NOT_FOUND.getMessage()));
-            cart = cartRepository.save(new Cart(user));
+            cart = createCart(userDto.getId());
         }
         return new CartResponseDto(cart);
     }
 
+    private Cart createCart(Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException(USER_NOT_FOUND.getMessage()));
+        return cartRepository.save(new Cart(user));
+    }
+
+    @Transactional
     @Override
     public void addCartItem(Long cartId, CartItemRequestDto dto) {
         Optional<Cart> optionalCart = cartRepository.findById(cartId);
         Cart cart;
-        if(!optionalCart.isPresent()) {
-            UserResponseDto userDto = (UserResponseDto) session.getAttribute("user");
-            User user = userRepository.findById(userDto.getId())
-                    .orElseThrow(() -> new IllegalStateException(USER_NOT_FOUND.getMessage()));
-            cart = cartRepository.save(new Cart(user));
-        }else{
+        if(optionalCart.isPresent()) {
             cart = optionalCart.get();
+        }else{
+            UserResponseDto userDto = (UserResponseDto) session.getAttribute("user");
+            if (userDto == null)
+                throw new IllegalStateException(USER_LOGIN_REQUIRED.getMessage());
+            cart = createCart(userDto.getId());
         }
 
         Item item = itemRepository.findById(dto.getItemId())
                         .orElseThrow(() -> new IllegalStateException(ITEM_NOT_FOUND.getMessage()));
 
-        cart.addCartItem(
-                CartItem.builder()
-                        .item(item)
-                        .quantity(dto.getQuantity())
-                        .build()
-        );
+        CartItem cartItem = CartItem.builder()
+                .item(item)
+                .quantity(dto.getQuantity())
+                .build();
+        cartItem.setCart(cart);
+
+        cart.addCartItem(cartItem);
     }
 
+    @Transactional
     @Override
     public void removeCartItem(Long cartId, List<Long> cartItemIds) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new IllegalArgumentException(CART_NOT_FOUND.getMessage()));
-        CartItem[] cartItems = cartItemRepository.findAllByIdIn(cartItemIds).toArray(CartItem[]::new);
-        cart.removeCartItem(cartItems);
+
+        /** 삭제할 장바구니 상품 호출 */
+        List<CartItem> cartItems = cartItemRepository.findAllByIdIn(cartItemIds);
+
+        cart.removeCartItem(cartItems.toArray(CartItem[]::new));
+
+        cartItemRepository.deleteAllInBatch(cartItems);
     }
 }

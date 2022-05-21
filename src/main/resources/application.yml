@@ -20,7 +20,8 @@ spring:
         order_inserts: true
         order_updates: true
         jdbc:
-          batch_size: 1000 # item bulk insert 되는지 확인하기
+          batch_size: 1000
+        default_batch_fetch_size: 1000
 
 logging:
   level:

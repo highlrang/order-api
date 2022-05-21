@@ -9,9 +9,7 @@ import java.util.Optional;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
-    @Query("SELECT c FROM Cart c JOIN FETCH c.user u JOIN FETCH c.cartItems ci JOIN FETCH ci.item WHERE u.id = :userId")
+    @Query("SELECT c FROM Cart c JOIN FETCH c.user u JOIN FETCH c.cartItems ci JOIN FETCH ci.item i JOIN FETCH i.brand WHERE u.id = :userId")
     Optional<Cart> findByUser(@Param(value = "userId") Long userId);
-    // 쿼리 확인하기
 
-    Optional<Cart> findByUser_Id(Long userId); // 쿼리 확인하기
 }

@@ -57,15 +57,12 @@ public class Item {
     private LocalDateTime createdDate;
 
     @Builder
-    public Item(Category category, Brand brand, String name, Integer price, Integer discountRate, Integer stock){
+    public Item(Category category, Brand brand, String name, Integer price, Integer stock){
         this.category = category;
         this.brand = brand;
         this.name = name;
         this.price = price;
-        this.discountRate = discountRate;
         this.stock = stock;
-        discountPrice = discountRate == null || discountRate == 0 ? price
-                : price * (discountRate / 100);
     }
 
     public void addStock(int quantity){
@@ -80,8 +77,7 @@ public class Item {
     }
 
     public void setDiscountRate(Integer rate){
-        discountPrice = rate;
-        discountPrice = rate == null || rate == 0 ? price
-                : price * (discountRate / 100);
+        discountRate = rate;
+        discountPrice = price * (discountRate / 100);
     }
 }
