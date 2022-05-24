@@ -20,14 +20,15 @@ public class ItemServiceImpl implements ItemService{
     private final ItemRepository itemRepository;
 
     @Override
-    public List<ItemResponseDto> findAll() {
-        return itemRepository.findAllDto();
+    public List<ItemResponseDto> findAll(Long brandId, Long categoryId, String search, String sort) {
+        return itemRepository.findAllDto(brandId, categoryId, search, sort);
     }
 
     @Override
     public ItemResponseDto findById(Long id) {
         Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException(ITEM_NOT_FOUND.getMessage()));
+        item.increaseViews();
         return new ItemResponseDto(item);
     }
 }

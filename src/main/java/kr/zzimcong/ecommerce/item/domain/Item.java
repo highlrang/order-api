@@ -5,6 +5,9 @@ import kr.zzimcong.ecommerce.order.domain.Order;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -17,19 +20,11 @@ import static kr.zzimcong.ecommerce.common.StatusCode.STOCK_ZERO_EXCEPTION;
 @Entity
 @Getter
 @NoArgsConstructor
-@SequenceGenerator(
-        name = "ITEM_SEQ_GENERATOR",
-        sequenceName = "ITEM_SEQ",
-        allocationSize = 1
-)
 @EntityListeners(value = AuditingEntityListener.class)
 public class Item {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "ITEM_SEQ_GENERATOR"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -52,6 +47,9 @@ public class Item {
 
     @NotNull
     private Integer stock;
+
+    @Column(columnDefinition = "int default 0")
+    private int views;
 
     @CreatedDate
     private LocalDateTime createdDate;
@@ -79,5 +77,9 @@ public class Item {
     public void setDiscountRate(Integer rate){
         discountRate = rate;
         discountPrice = price * (discountRate / 100);
+    }
+
+    public void increaseViews(){
+        views ++;
     }
 }

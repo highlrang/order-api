@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ItemService {
 
-    List<ItemResponseDto> findAll();
+    List<ItemResponseDto> findAll(Long brandId, Long categoryId, String search, String sort);
     ItemResponseDto findById(Long id);
 
 }

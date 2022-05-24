@@ -17,9 +17,12 @@ public class ItemApiController {
     private final ItemService itemService;
 
     @GetMapping
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAll(@RequestParam(value = "brand", required = false) Long brandId,
+                                     @RequestParam(value = "category", required = false) Long categoryId,
+                                     @RequestParam(value = "search", required = false) String search,
+                                     @RequestParam(value = "sort", required = false) String sort){
         return ResponseEntity.ok(
-                ApiResponseDto.success(itemService.findAll())
+                ApiResponseDto.success(itemService.findAll(brandId, categoryId, search, sort))
         );
     }
 

@@ -4,6 +4,13 @@
 <b>상품 목록<br>
 <span style="color: pink;">GET</span> /api/v1/item</b>
 ```json
+Request{
+  "brandId?": "브랜드 아이디",
+  "categoryId?": "카테고리 아이디",
+  "search?": "검색 문자열",
+  "sort?": "정렬 기준 속성"
+}
+
 Response
 {
   "statusCode": "1001", 
