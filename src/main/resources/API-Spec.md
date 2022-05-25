@@ -71,7 +71,7 @@
 ```json
 응답 객체
 {
-  statusCode: "1001", 
+  "statusCode": "1001", 
   "message": "success",
   "content": {
       "id": "number; 장바구니 아이디",
@@ -161,12 +161,17 @@
 ```json
 요청 데이터
 {
-  orderItems: [
+  "orderItems": [
     {
       "itemId": "number; 상품 아이디",
       "quantity": "number; 상품 수량",
       "price": "number; 상품 가격(또는 할인가)",
-    }, ...
+    },
+    {
+      "itemId": "number; 상품 아이디",
+      "quantity": "number; 상품 수량",
+      "price": "number; 상품 가격(또는 할인가)",
+    }
   ],
   "address": {
     "basicAddress": "string; 주소", 
