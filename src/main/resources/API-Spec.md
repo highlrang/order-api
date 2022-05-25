@@ -4,27 +4,35 @@
 <b>상품 목록<br>
 <span style="color: pink;">GET</span> /api/v1/item</b>
 ```json
-Request{
-  "brandId?": "브랜드 아이디",
-  "categoryId?": "카테고리 아이디",
-  "search?": "검색 문자열",
-  "sort?": "정렬 기준 속성"
+요청 데이터
+{
+  "brandId?": "number; 브랜드 아이디",
+  "categoryId?": "number; 카테고리 아이디",
+  "search?": "string; 검색 문자열",
+  "sort?": "string; 정렬 기준 속성"
 }
 
-Response
+응답 객체
 {
   "statusCode": "1001", 
   "message": "success",
   "content": [
     {
-      "id": 1,                        // 상품 아이디
-      "name": "상품명",                // 상품명
-      "brandName": "브랜드명",         // 브랜드명
-      "price": 10000,                 // 가격
-      "discountRate": 10,             // 할인율
-      "discountPrice": 9000,          // 할인가
+      "id": "number; 상품 아이디",              
+      "name": "string; 상품명",
+      "brandName": "string; 브랜드명",
+      "price": "number; 가격",
+      "discountRate": "number; 할인율",
+      "discountPrice": "number; 할인가"
     },
-    ...
+    {
+      "id": "number; 상품 아이디",              
+      "name": "string; 상품명",
+      "brandName": "string; 브랜드명",
+      "price": "number; 가격",
+      "discountRate": "number; 할인율",
+      "discountPrice": "number; 할인가"
+    }
   ]
 }
 ```
@@ -32,24 +40,24 @@ Response
 <b>상품 상세<br>
 <span style="color: pink;">GET</span> /api/v1/item/{id}</b>
 ```json
-Response
+응답 객체
 {
   "statusCode": "1001", 
   "message": "success",
   "content": {
-      "id": 1,                
-      "name": "상품명",        
-      "brandName": "브랜드명", 
-      "price": 10000,         
-      "discountRate": 10,
-      "discountPrice": 9000
+      "id": "number; 상품 아이디",              
+      "name": "string; 상품명",
+      "brandName": "string; 브랜드명",
+      "price": "number; 가격",
+      "discountRate": "number; 할인율",
+      "discountPrice": "number; 할인가"
     }
 }
 
-예외 사항 발생 시
+예외 응답 객체
 {
-  "statusCode": "4001",
-  "message": "상품 정보를 불러오지 못했습니다.",
+  "statusCode": "number; 4001",
+  "message": "string; 상품 정보를 불러오지 못했습니다.",
   "content": null
 }
 ```
@@ -61,30 +69,37 @@ Response
 <b>장바구니 상품 목록<br>
 <span style="color: pink;">GET</span> /api/v1/cart</b>
 ```json
-Response
+응답 객체
 {
   statusCode: "1001", 
   "message": "success",
-  "content": [
-    {
-      "id": 1,                    // 장바구니 아이디
-      "cartItems": [              // 장바구니에 담은 상품 목록
+  "content": {
+      "id": "number; 장바구니 아이디",
+      "cartItems": [              
         {
-          "id": 1,                // 장바구니상품 아이디
-          "item": {               // 상품 정보
-            "id": 1,
-            "name": "상품명",        
-            "brandName": "브랜드명", 
-            "price": 10000,         
-            "discountRate": 10,
-            "discountPrice": 9000
+          "id": "number; 장바구니상품 아이디",
+          "item": {
+            "id": "number; 상품 아이디",
+            "name": "string; 상품명",        
+            "brandName": "string; 브랜드명", 
+            "price": "number; 가격",         
+            "discountRate": "number; 할인율",
+            "discountPrice": "number; 할인가"
           }
         },
-        ...
+        {
+          "id": "number; 장바구니상품 아이디",
+          "item": {
+            "id": "number; 상품 아이디",
+            "name": "string; 상품명",        
+            "brandName": "string; 브랜드명", 
+            "price": "number; 가격",         
+            "discountRate": "number; 할인율",
+            "discountPrice": "number; 할인가"
+          }
+        }
       ]
-    },
-    ...
-  ]
+    }
 }
 ```
 <br>
@@ -92,23 +107,23 @@ Response
 <b>장바구니 상품 담기<br>
 <span style="color: pink;">POST</span> /api/v1/cart/{id}</b>
 ```json
-Request
+요청 데이터
 {
-  "itemId": 1,          // 상품 아이디
-  "quantity": 1,        // 수량
+  "itemId": "number; 상품 아이디",
+  "quantity": "number; 상품 수량",
 }
 
-Response
+응답 객체
 {
   "statusCode": "1001", 
   "message": "success",
   "content": null
 }
 
-Fail Response
+예외 응답 객체
 {
   "statusCode": "4001",
-  "message": "장바구니에 상품을 추가하지 못했습니다.",
+  "message": "string; 장바구니에 상품을 추가하지 못했습니다.",
   "content": null
 }
 ```
@@ -117,22 +132,22 @@ Fail Response
 <b>장바구니 상품 삭제<br>
 <span style="color: pink;">DELETE</span> /api/v1/cart/{id}/item</b>
 ```json
-Request
+요청 데이터
 {
-  "cartItemId": [1, 2, ...],    // 장바구니상품 아이디
+  "cartItemId": "[number; 장바구니상품 아이디 배열]"
 }
 
-Response
+응답 객체
 {
   "statusCode": "1001", 
   "message": "success",
   "content": null
 }
 
-Fail Response
+예외 응답 객체
 {
   "statusCode": "4001",
-  "message": "장바구니에서 상품을 제거하지 못했습니다.",
+  "message": "string; 장바구니에서 상품을 제거하지 못했습니다.",
   "content": null
 }
 ```
@@ -140,36 +155,37 @@ Fail Response
 
 
 <h2>주문 API</h2><br>
+
 <b>상품 주문하기 -> 장바구니에서 여러 개 주문도 가능<br>
 <span style="color: pink;">POST</span> /api/v1/order</b>
 ```json
-Request
+요청 데이터
 {
   orderItems: [
     {
-      "itemId": 1,          // 상품 아이디
-      "quantity": 1,        // 수량
-      "price": 9000,        // 상품 가격(결제할 금액)
+      "itemId": "number; 상품 아이디",
+      "quantity": "number; 상품 수량",
+      "price": "number; 상품 가격(또는 할인가)",
     }, ...
   ],
-  "address": {              // 배송지 주소
-    "basicAddress": "주소", 
-    "detailAddress": "상세 주소",
-    "poseCode": "123-456"
+  "address": {
+    "basicAddress": "string; 주소", 
+    "detailAddress": "string; 상세 주소",
+    "poseCode": "string; 우편 번호"
   }
 },
 
-Response
+응답 객체
 {
   "statusCode": "1001", 
   "message": "success",
   "content": null
 }
 
-Fail Response
+예외 응답 객체
 {
   "statusCode": "4001",
-  "message": "상품 주문에 실패하였습니다.",
+  "message": "string; 상품 주문에 실패하였습니다.",
   "content": null
 }
 ```
@@ -178,52 +194,56 @@ Fail Response
 <b>주문 내역 목록<br>
 <span style="color: pink;">GET</span> /api/v1/order</b>
 ```json
-Response
-[
-  {
-    "id": 1,         // 주문 아이디
-    "orderItems": [  // 주문상품 목록
+응답 객체
+{
+  "statusCode": "1001", 
+  "message": "success",
+  "content": {
+    "id": "number; 주문 아이디",
+    "orderItems": [
       {
-        "itemName": "상품명",
-        "price": 10000,
-        "quantity": 1
+        "itemName": "string; 상품명",
+        "price": "number; 상품 가격(또는 할인가)",
+        "quantity": "string; 상품 수량"
       },
       {
-        "itemName": "상품명",
-        "price": 5000
-        "quantity": 2
+        "itemName": "string; 상품명",
+        "price": "number; 상품 가격(또는 할인가)",
+        "quantity": "string; 상품 수량"
       }
     ],
-    "orderStatus": "주문상태",      // 주문상태
-    "createdDate": "2022-05-20",   // 주문날짜
-    "totalPrice": 20000            // 총 주문 금액
-  },
-  ...
-]
+    "orderStatus": "string; 주문상태",
+    "createdDate": "string; 주문 날짜(yyyy-MM-dd)",
+    "totalPrice": "number; 총 주문금액"
+  }
+
 ```
 <br>
 
 <b>주문 내역 상세<br>
 <span style="color: pink;">GET</span> /api/v1/order/{id}</b>
 ```json
-Response
+응답 객체
 {
-  "id": 1,         // 주문 아이디
-  "orderItems": [  // 주문상품 목록
-    {
-      "itemName": "상품명",
-      "price": 10000,
-      "quantity": 1
-    },
-    {
-      "itemName": "상품명",
-      "price": 5000
-      "quantity": 2
-    }
-  ],
-  "orderStatus": "주문상태",      // 주문상태
-  "createdDate": "2022-05-20",   // 주문날짜
-  "totalPrice": 20000            // 총 주문 금액
+  "statusCode": "1001", 
+  "message": "success",
+  "content": {
+    "id": "number; 주문 아이디",
+    "orderItems": [
+      {
+        "itemName": "string; 상품명",
+        "price": "number; 상품 가격(또는 할인가)",
+        "quantity": "number; 상품 수량"
+      },
+      {
+        "itemName": "string; 상품명",
+        "price": "number; 상품 가격(또는 할인가)",
+        "quantity": "number; 상품 수량"
+      }
+    ],
+    "orderStatus": "string; 주문상태",
+    "createdDate": "string; 주문 날짜(yyyy-MM-dd)",
+    "totalPrice": "number; 총 주문금액"
 }
 ```
 <br>
@@ -231,14 +251,14 @@ Response
 <b>주문 취소<br>
 <span style="color: pink;">PATCH</span> /api/v1/order/{id}/cancel</b>
 ```json
-Response
+응답 객체
 {
   "statusCode": "1001",
   "message": "success",
   "content": null
 }
 
-Fail Response
+예외 응답 객체
 {
   "statusCode": "4001",
   "message": "주문 취소에 실패하였습니다.",
